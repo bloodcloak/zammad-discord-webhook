@@ -7,9 +7,9 @@ COPY requirements.txt ./requirements.txt
 RUN export PIP_NO_CACHE_DIR=false && apk update && apk add --update --no-cache --virtual .build-deps alpine-sdk
 RUN pip3 install -r requirements.txt && rm -f requirements.txt
 COPY webhook_forwarder.py ./webhook_forwarder.py
+COPY gunicorn_start.sh ./gunicorn_start.sh
 
 COPY --chown=webhook:webhook . .
 USER webhook
 
-CMD ["python3", "webhook_forwarder.py"]
-EXPOSE 8000
+ENTRYPOINT [ "./gunicorn_start.sh" ]
