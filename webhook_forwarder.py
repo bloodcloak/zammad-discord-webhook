@@ -66,7 +66,7 @@ async def userreports():
 
     rDict = request.json
     async with aiohttp.ClientSession() as session:
-        reportsHook = Webhook(reportsURL, adapter = AsyncWebhookAdapter(session))
+        reportsHook = Webhook.from_url(reportsURL, adapter = AsyncWebhookAdapter(session))
 
         ticketURL = baseTicketURL + rDict['ticket']['id']
         embed = Embed(title='New User Report',url=ticketURL, color=Color.orange)
@@ -107,7 +107,7 @@ async def community():
 
     rDict = request.json
     async with aiohttp.ClientSession() as session:
-        contactsHook = Webhook(contactsURL, adapter = AsyncWebhookAdapter(session))
+        contactsHook = Webhook.from_url(contactsURL, adapter = AsyncWebhookAdapter(session))
 
         ticketURL = baseTicketURL + rDict['ticket']['id']
         embed = Embed(title='Hub Application',url=ticketURL, color=Color.purple)
@@ -165,7 +165,7 @@ async def general():
 
     rDict = request.json
     async with aiohttp.ClientSession() as session:
-        contactsHook = Webhook(contactsURL, adapter = AsyncWebhookAdapter(session))
+        contactsHook = Webhook.from_url(contactsURL, adapter = AsyncWebhookAdapter(session))
 
         ticketURL = baseTicketURL + rDict['ticket']['id']
         embed = Embed(title='Contact Response',url=ticketURL, color=Color.blue)
