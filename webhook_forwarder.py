@@ -6,6 +6,7 @@ from flask import Flask, abort, request, jsonify, Response
 from discord import Webhook, AsyncWebhookAdapter, Embed, Colour
 from re import findall
 import aiohttp
+from bs4 import BeautifulSoup
 
 logging.basicConfig(stream=stderr, level=logging.INFO)
 
@@ -89,12 +90,13 @@ async def userreports():
         if reported_proof:
             embed.add_field(name='Proof', value=reported_proof, inline=False)
 
+        articlebody = BeautifulSoup(rDict['article']['body'])
         try:
-            parts = findall(subdivideRegex, rDict['article']['body'])
+            parts = findall(subdivideRegex, articlebody.get_text())
             for part in parts:
                 embed.add_field(name='Message', value=part, inline=False)
         except:
-            embed.add_field(name='Message', value=rDict['article']['body'], inline=False)
+            embed.add_field(name='Message', value=articlebody.get_text(), inline=False)
 
         await reportsHook.send(embed=embed)
     resp = jsonify(success=True)
@@ -148,12 +150,13 @@ async def community():
         if community_ficon:
             embed.add_field(name='Icon', value=community_ficon, inline=False)
 
+        articlebody = BeautifulSoup(rDict['article']['body'])
         try:
-            parts = findall(subdivideRegex, rDict['article']['body'])
+            parts = findall(subdivideRegex, articlebody.get_text())
             for part in parts:
                 embed.add_field(name='Message', value=part, inline=False)
         except:
-            embed.add_field(name='Message', value=rDict['article']['body'], inline=False)
+            embed.add_field(name='Message', value=articlebody.get_text(), inline=False)
 
         await contactsHook.send(embed=embed)
     resp = jsonify(success=True)
@@ -183,12 +186,13 @@ async def general():
         if aaactivecontacttype:
             embed.add_field(name='What is this about?', value=aaactivecontacttype, inline=False)
 
+        articlebody = BeautifulSoup(rDict['article']['body'])
         try:
-            parts = findall(subdivideRegex, rDict['article']['body'])
+            parts = findall(subdivideRegex, articlebody.get_text())
             for part in parts:
                 embed.add_field(name='Message', value=part, inline=False)
         except:
-            embed.add_field(name='Message', value=rDict['article']['body'], inline=False)
+            embed.add_field(name='Message', value=articlebody.get_text(), inline=False)
 
         await contactsHook.send(embed=embed)
     resp = jsonify(success=True)

@@ -1,3 +1,4 @@
 flask[async]
 discord.py
 gunicorn
+beautifulsoup4
