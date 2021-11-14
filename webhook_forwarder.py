@@ -2,7 +2,7 @@ import hmac
 import logging
 from os import environ
 from sys import stderr, exit
-from flask import Flask, abort, json, request, jsonify, Response
+from flask import Flask, abort, request, jsonify, Response
 from discord import Webhook, AsyncWebhookAdapter, Embed, Color
 from re import findall
 import aiohttp
@@ -64,7 +64,7 @@ async def userreports():
     header_signature = request.headers.get('X-Hub-Signature')
     verifyHeaders(header_signature)
 
-    rDict = json.loads(request.json)
+    rDict = request.json
     async with aiohttp.ClientSession() as session:
         reportsHook = Webhook(url=str(reportsURL), adapter = AsyncWebhookAdapter(session))
 
@@ -105,7 +105,7 @@ async def community():
     header_signature = request.headers.get('X-Hub-Signature')
     verifyHeaders(header_signature)
 
-    rDict = json.loads(request.json)
+    rDict = request.json
     async with aiohttp.ClientSession() as session:
         contactsHook = Webhook(url=str(contactsURL), adapter = AsyncWebhookAdapter(session))
 
@@ -163,7 +163,7 @@ async def general():
     header_signature = request.headers.get('X-Hub-Signature')
     verifyHeaders(header_signature)
 
-    rDict = json.loads(request.json)
+    rDict = request.json
     async with aiohttp.ClientSession() as session:
         contactsHook = Webhook(url=str(contactsURL), adapter = AsyncWebhookAdapter(session))
 
