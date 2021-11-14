@@ -12,4 +12,5 @@ COPY gunicorn_start.sh ./gunicorn_start.sh
 COPY --chown=webhook:webhook . .
 USER webhook
 
+EXPOSE 80
 ENTRYPOINT [ "sh", "gunicorn_start.sh" ]
