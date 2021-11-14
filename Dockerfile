@@ -12,4 +12,4 @@ COPY gunicorn_start.sh ./gunicorn_start.sh
 COPY --chown=webhook:webhook . .
 USER webhook
 
-ENTRYPOINT [ "./gunicorn_start.sh" ]
+ENTRYPOINT [ "sh", "gunicorn_start.sh" ]
