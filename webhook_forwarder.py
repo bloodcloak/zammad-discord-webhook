@@ -97,7 +97,8 @@ async def userreports():
             embed.add_field(name='Message', value=rDict['article']['body'], inline=False)
 
         await reportsHook.send(embed=embed)
-    return Response(200)
+    resp = jsonify(success=True)
+    return resp
 
 @application.route('/community', methods=['POST'])
 async def community():
@@ -155,7 +156,8 @@ async def community():
             embed.add_field(name='Message', value=rDict['article']['body'], inline=False)
 
         await contactsHook.send(embed=embed)
-    return Response(200)
+    resp = jsonify(success=True)
+    return resp
 
 @application.route('/general', methods=['POST'])
 async def general():
@@ -189,7 +191,8 @@ async def general():
             embed.add_field(name='Message', value=rDict['article']['body'], inline=False)
 
         await contactsHook.send(embed=embed)
-    return Response(200)
+    resp = jsonify(success=True)
+    return resp
 
 # Run the application if we're run as a script
 if __name__ == '__main__':
