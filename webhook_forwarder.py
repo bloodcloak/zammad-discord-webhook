@@ -68,7 +68,7 @@ async def userreports():
     async with aiohttp.ClientSession() as session:
         reportsHook = Webhook.from_url(reportsURL, adapter = AsyncWebhookAdapter(session))
 
-        ticketURL = baseTicketURL + rDict['ticket']['id']
+        ticketURL = baseTicketURL + str(rDict['ticket']['id'])
         embed = Embed(title='New User Report',url=ticketURL, color=Color.orange)
 
         embed.add_field(name='Reporter', value=rDict['ticket']['customer']['firstname'], inline=False)
@@ -109,7 +109,7 @@ async def community():
     async with aiohttp.ClientSession() as session:
         contactsHook = Webhook.from_url(contactsURL, adapter = AsyncWebhookAdapter(session))
 
-        ticketURL = baseTicketURL + rDict['ticket']['id']
+        ticketURL = baseTicketURL + str(rDict['ticket']['id'])
         embed = Embed(title='Hub Application',url=ticketURL, color=Color.purple)
 
         embed.add_field(name='User', value=rDict['ticket']['customer']['firstname'], inline=False)
@@ -167,7 +167,7 @@ async def general():
     async with aiohttp.ClientSession() as session:
         contactsHook = Webhook.from_url(contactsURL, adapter = AsyncWebhookAdapter(session))
 
-        ticketURL = baseTicketURL + rDict['ticket']['id']
+        ticketURL = baseTicketURL + str(rDict['ticket']['id'])
         embed = Embed(title='Contact Response',url=ticketURL, color=Color.blue)
 
         embed.add_field(name='User', value=rDict['ticket']['customer']['firstname'], inline=False)
