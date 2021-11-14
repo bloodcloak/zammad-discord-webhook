@@ -3,7 +3,7 @@ import logging
 from os import environ
 from sys import stderr, exit
 from flask import Flask, abort, request, jsonify, Response
-from discord import Webhook, AsyncWebhookAdapter, Embed, Color
+from discord import Webhook, AsyncWebhookAdapter, Embed, Colour
 from re import findall
 import aiohttp
 
@@ -69,7 +69,7 @@ async def userreports():
         reportsHook = Webhook.from_url(reportsURL, adapter = AsyncWebhookAdapter(session))
 
         ticketURL = baseTicketURL + str(rDict['ticket']['id'])
-        embed = Embed(title='New User Report',url=ticketURL, color=Color.orange)
+        embed = Embed(title='New User Report',url=ticketURL, color=Colour.orange)
 
         embed.add_field(name='Reporter', value=rDict['ticket']['customer']['firstname'], inline=False)
 
@@ -110,7 +110,7 @@ async def community():
         contactsHook = Webhook.from_url(contactsURL, adapter = AsyncWebhookAdapter(session))
 
         ticketURL = baseTicketURL + str(rDict['ticket']['id'])
-        embed = Embed(title='Hub Application',url=ticketURL, color=Color.purple)
+        embed = Embed(title='Hub Application',url=ticketURL, color=Colour.purple)
 
         embed.add_field(name='User', value=rDict['ticket']['customer']['firstname'], inline=False)
         embed.add_field(name='User ID', value=rDict['ticket']['customer']['login'], inline=False)
@@ -168,7 +168,7 @@ async def general():
         contactsHook = Webhook.from_url(contactsURL, adapter = AsyncWebhookAdapter(session))
 
         ticketURL = baseTicketURL + str(rDict['ticket']['id'])
-        embed = Embed(title='Contact Response',url=ticketURL, color=Color.blue)
+        embed = Embed(title='Contact Response',url=ticketURL, color=Colour.blue)
 
         embed.add_field(name='User', value=rDict['ticket']['customer']['firstname'], inline=False)
         embed.add_field(name='User ID', value=rDict['ticket']['customer']['login'], inline=False)
