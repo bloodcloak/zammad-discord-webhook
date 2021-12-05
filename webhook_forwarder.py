@@ -72,6 +72,7 @@ async def userreports():
         ticketURL = baseTicketURL + str(rDict['ticket']['id'])
         embed = Embed(title='New User Report',url=ticketURL)
 
+        embed.add_field(name='Ticket Title', value=rDict['ticket']['title'], inline=False)
         embed.add_field(name='Reporter', value=rDict['ticket']['customer']['firstname'], inline=False)
 
         alt_contact = rDict['ticket']['aalternative_contact']
@@ -117,6 +118,7 @@ async def community():
 
         embed.add_field(name='User', value=rDict['ticket']['customer']['firstname'], inline=False)
         embed.add_field(name='User ID', value=rDict['ticket']['customer']['login'], inline=False)
+        embed.add_field(name='Ticket Title', value=rDict['ticket']['title'], inline=False)
 
         alt_contact = rDict['ticket']['aalternative_contact']
         if alt_contact:
@@ -177,7 +179,8 @@ async def general():
 
         embed.add_field(name='User', value=rDict['ticket']['customer']['firstname'], inline=False)
         embed.add_field(name='User ID', value=rDict['ticket']['customer']['login'], inline=False)
-
+        embed.add_field(name='Ticket Title', value=rDict['ticket']['title'], inline=False)
+        
         alt_contact = rDict['ticket']['aalternative_contact']
         if alt_contact:
             embed.add_field(name='Alternative Contact', value=alt_contact, inline=False)
