@@ -91,6 +91,10 @@ async def userreports():
         if reported_proof:
             embed.add_field(name='Proof', value=reported_proof, inline=False)
 
+        system_attachments = rDict['article']['attachments']
+        if system_attachments:
+            embed.add_field(name="Additional Files", value="Yes - See Ticket", inline=False)
+
         articlebody = BeautifulSoup(rDict['article']['body'])
         try:
             parts = findall(subdivideRegex, articlebody.get_text())
@@ -152,6 +156,10 @@ async def community():
         if community_ficon:
             embed.add_field(name='Icon', value=community_ficon, inline=False)
 
+        system_attachments = rDict['article']['attachments']
+        if system_attachments:
+            embed.add_field(name="Additional Files", value="Yes - See Ticket", inline=False)
+
         articlebody = BeautifulSoup(rDict['article']['body'])
         try:
             parts = findall(subdivideRegex, articlebody.get_text())
@@ -188,6 +196,10 @@ async def general():
         aaactivecontacttype = rDict['ticket']['aaactivecontacttype']
         if aaactivecontacttype:
             embed.add_field(name='What is this about?', value=aaactivecontacttype, inline=False)
+
+        system_attachments = rDict['article']['attachments']
+        if system_attachments:
+            embed.add_field(name="Additional Files", value="Yes - See Ticket", inline=False)
 
         articlebody = BeautifulSoup(rDict['article']['body'])
         try:
