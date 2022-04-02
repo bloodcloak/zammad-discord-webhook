@@ -69,8 +69,9 @@ async def userreports():
     async with aiohttp.ClientSession() as session:
         reportsHook = Webhook.from_url(reportsURL, adapter = AsyncWebhookAdapter(session))
 
+        embedTitle = 'New User Report | Ticket #' + str(rDict['ticket']['id'])
         ticketURL = baseTicketURL + str(rDict['ticket']['id'])
-        embed = Embed(title='New User Report',url=ticketURL)
+        embed = Embed(title=embedTitle,url=ticketURL)
 
         embed.add_field(name='Ticket Title', value=rDict['ticket']['title'], inline=False)
         embed.add_field(name='Reporter', value=rDict['ticket']['customer']['firstname'], inline=False)
@@ -117,8 +118,9 @@ async def community():
     async with aiohttp.ClientSession() as session:
         contactsHook = Webhook.from_url(contactsURL, adapter = AsyncWebhookAdapter(session))
 
+        embedTitle = 'Hub Application | Ticket #' + str(rDict['ticket']['id'])
         ticketURL = baseTicketURL + str(rDict['ticket']['id'])
-        embed = Embed(title='Hub Application',url=ticketURL)
+        embed = Embed(title=embedTitle,url=ticketURL)
 
         embed.add_field(name='User', value=rDict['ticket']['customer']['firstname'], inline=False)
         embed.add_field(name='User ID', value=rDict['ticket']['customer']['login'], inline=False)
@@ -182,8 +184,9 @@ async def general():
     async with aiohttp.ClientSession() as session:
         contactsHook = Webhook.from_url(contactsURL, adapter = AsyncWebhookAdapter(session))
 
+        embedTitle = 'Contact Response | Ticket #' + str(rDict['ticket']['id'])
         ticketURL = baseTicketURL + str(rDict['ticket']['id'])
-        embed = Embed(title='Contact Response',url=ticketURL)
+        embed = Embed(title=embedTitle,url=ticketURL)
 
         embed.add_field(name='User', value=rDict['ticket']['customer']['firstname'], inline=False)
         embed.add_field(name='User ID', value=rDict['ticket']['customer']['login'], inline=False)
