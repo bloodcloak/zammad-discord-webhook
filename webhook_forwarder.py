@@ -19,6 +19,7 @@ if webhook_secret is None:
 # Get webhook objects
 reportsURL = environ.get('REPORTS_WEBHOOK')
 contactsURL = environ.get('CONTACTS_WEBHOOK')
+wikiURL = environ.get('WIKI_WEBHOOK')
 
 if reportsURL is None:
     logging.error("Must Define REPORTS_WEBHOOK")
@@ -26,6 +27,10 @@ if reportsURL is None:
 
 if contactsURL is None:
     logging.error("Must Define CONTACTS_WEBHOOK")
+    exit(1)
+
+if wikiURL is None:
+    logging.error("Must Define WIKI_WEBHOOK")
     exit(1)
 
 subdivideRegex = r"[\s\S]{1,1024}"
@@ -185,6 +190,48 @@ async def general():
         contactsHook = Webhook.from_url(contactsURL, adapter = AsyncWebhookAdapter(session))
 
         embedTitle = 'Contact Response | Ticket #' + str(rDict['ticket']['id'])
+        ticketURL = baseTicketURL + str(rDict['ticket']['id'])
+        embed = Embed(title=embedTitle,url=ticketURL)
+
+        embed.add_field(name='User', value=rDict['ticket']['customer']['firstname'], inline=False)
+        embed.add_field(name='User ID', value=rDict['ticket']['customer']['login'], inline=False)
+        embed.add_field(name='Ticket Title', value=rDict['ticket']['title'], inline=False)
+        
+        alt_contact = rDict['ticket']['aalternative_contact']
+        if alt_contact:
+            embed.add_field(name='Alternative Contact', value=alt_contact, inline=False)
+
+        aaactivecontacttype = rDict['ticket']['aaactivecontacttype']
+        if aaactivecontacttype:
+            embed.add_field(name='What is this about?', value=aaactivecontacttype, inline=False)
+
+        system_attachments = rDict['article']['attachments']
+        if system_attachments:
+            embed.add_field(name="Additional Files", value="Yes - See Ticket", inline=False)
+
+        articlebody = BeautifulSoup(rDict['article']['body'])
+        try:
+            parts = findall(subdivideRegex, articlebody.get_text())
+            for part in parts:
+                embed.add_field(name='Message', value=part, inline=False)
+        except:
+            embed.add_field(name='Message', value=articlebody.get_text(), inline=False)
+
+        await contactsHook.send(embed=embed)
+    resp = jsonify(success=True)
+    return resp
+
+@application.route('/wiki', methods=['POST'])
+async def wiki():
+    # validate inbound webhook
+    header_signature = request.headers.get('X-Hub-Signature')
+    verifyHeaders(header_signature)
+
+    rDict = request.json
+    async with aiohttp.ClientSession() as session:
+        contactsHook = Webhook.from_url(contactsURL, adapter = AsyncWebhookAdapter(session))
+
+        embedTitle = 'Wiki Response | Ticket #' + str(rDict['ticket']['id'])
         ticketURL = baseTicketURL + str(rDict['ticket']['id'])
         embed = Embed(title=embedTitle,url=ticketURL)
 
