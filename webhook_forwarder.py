@@ -229,7 +229,7 @@ async def wiki():
 
     rDict = request.json
     async with aiohttp.ClientSession() as session:
-        contactsHook = Webhook.from_url(contactsURL, adapter = AsyncWebhookAdapter(session))
+        wikiHook = Webhook.from_url(wikiURL, adapter = AsyncWebhookAdapter(session))
 
         embedTitle = 'Wiki Contact Response | Ticket #' + str(rDict['ticket']['id'])
         ticketURL = baseTicketURL + str(rDict['ticket']['id'])
@@ -259,7 +259,7 @@ async def wiki():
         except:
             embed.add_field(name='Message', value=articlebody.get_text(), inline=False)
 
-        await contactsHook.send(embed=embed)
+        await wikiHook.send(embed=embed)
     resp = jsonify(success=True)
     return resp
 
