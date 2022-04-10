@@ -231,7 +231,7 @@ async def wiki():
     async with aiohttp.ClientSession() as session:
         contactsHook = Webhook.from_url(contactsURL, adapter = AsyncWebhookAdapter(session))
 
-        embedTitle = 'Wiki Response | Ticket #' + str(rDict['ticket']['id'])
+        embedTitle = 'Wiki Contact Response | Ticket #' + str(rDict['ticket']['id'])
         ticketURL = baseTicketURL + str(rDict['ticket']['id'])
         embed = Embed(title=embedTitle,url=ticketURL)
 
